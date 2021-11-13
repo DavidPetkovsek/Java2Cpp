@@ -1,0 +1,50 @@
+*.zip
+*.settings
+*.pyc
+**/ejni/
+**/bin/
+.classpath
+.project
+.pydevproject
+/target/
+**/.vscode/
+**/__pycache__
+*.npy
+*.jar
+*.so
+
+cpp/bin
+cpp/build
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+!cpp/bin/DrakeDLL.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
