@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -74,6 +75,7 @@ public class EasyJNI {
 	static int jk = 0;
 	private static void toFile(Collection<CppClass> classes) {
 
+		Date d = new Date();
 		classes.parallelStream().forEach(c->{
 			new File(c.getIncludeDir()).mkdirs();
 			File f = new File(c.getInclude()+".hpp");
@@ -144,6 +146,8 @@ public class EasyJNI {
 
 			System.out.print("Finished: "+((int)(((double)++jk)/((double)classes.size())*100d))+"% "+ jk +"/"+classes.size()+"    \r");
 		});
+		System.out.print("Finished: "+((int)(((double)++jk)/((double)classes.size())*100d))+"% "+ jk +"/"+classes.size());
+		System.out.println(" completed in "+((double)(new Date().getTime()-d.getTime()))/1000d +" seconds");
 	}
 	
 	
