@@ -47,7 +47,7 @@ public abstract class JNIType implements JNIBase{
 	 * 
 	 * @param c Class to represent.
 	 */
-	public JNIType(Class<?> c) {
+	protected JNIType(Class<?> c) {
 		this.c = c;
 		if(c.getDeclaringClass() != null)
 			declaringClass = EJNI.createJNINestable(c.getDeclaringClass());

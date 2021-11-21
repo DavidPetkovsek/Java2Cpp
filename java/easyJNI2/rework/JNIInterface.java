@@ -10,7 +10,7 @@ public class JNIInterface extends JNINestable {
 	 * 
 	 * @param c The interface type to represent.
 	 */
-	public JNIInterface(Class<?> c) {
+	protected JNIInterface(Class<?> c) {
 		super(c);
 		assert c.isInterface() : "Attempted to create a JNIInterface from a non-interface class!";
 	}

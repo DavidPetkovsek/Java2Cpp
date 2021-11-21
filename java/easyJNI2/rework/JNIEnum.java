@@ -15,7 +15,7 @@ public class JNIEnum extends JNIType{
 	 * 
 	 * @param c The enumerated type to represent.
 	 */
-	public JNIEnum(Class<?> c) {
+	protected JNIEnum(Class<?> c) {
 		super(c);
 		assert c.isEnum() : "Attempted to create a JNIEnum from a non-enum class!";
 		enumConstants = Arrays.stream(c.getEnumConstants()).map(ec->((Enum<?>)ec)).toArray(Enum<?>[]::new);

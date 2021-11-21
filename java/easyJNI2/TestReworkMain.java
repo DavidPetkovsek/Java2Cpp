@@ -1,9 +1,11 @@
-package easyJNI2.rework;
+package easyJNI2;
+
+import easyJNI2.rework.EJNI;
 
 /**
  * Holds different tests for trying out the rework
  */
-public class TestMain {
+public class TestReworkMain {
 	
 	/**
 	 * A test main
@@ -11,7 +13,7 @@ public class TestMain {
 	 * @param args unused
 	 */
 	public static void main(String[] args) {
-		new JNIClass(String.class);
+		EJNI.createJNI(String.class);
 	}
 
 }

@@ -10,7 +10,7 @@ public class JNIClass extends JNINestable {
 	 * 
 	 * @param c The class to represent.
 	 */
-	public JNIClass(Class<?> c) {
+	protected JNIClass(Class<?> c) {
 		super(c);
 		assert !c.isAnnotation() && !c.isInterface() && !c.isEnum() && !c.isArray() && !c.isPrimitive() : "Attempted to create a JNIClass from a non-class class!";
 	}

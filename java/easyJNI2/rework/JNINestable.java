@@ -28,7 +28,7 @@ public abstract class JNINestable extends JNIType{
 	 * 
 	 * @param c Class to represent.
 	 */
-	public JNINestable(Class<?> c) {
+	protected JNINestable(Class<?> c) {
 		super(c);
 		
 		for(var cc : c.getDeclaredClasses()) {
