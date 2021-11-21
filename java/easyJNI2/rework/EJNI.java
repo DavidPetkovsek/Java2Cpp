@@ -55,6 +55,8 @@ public class EJNI {
 	 */
 	public static JNIClass createJNIClass(Class<?> c) {
 		assert !c.isAnnotation() && !c.isInterface() && !c.isEnum() && !c.isArray() && !c.isPrimitive() : "Attempted to create a JNIClass from a non-class class!";
+		if(c.isSynthetic()) System.out.println("Warning: Using synthetic class " + c.getTypeName());
+		
 		if(classes.contains(c))
 			return classes.get(c);
 		JNIClass jc = new JNIClass(c);
@@ -71,6 +73,8 @@ public class EJNI {
 	 */
 	public static JNIInterface createJNIInterface(Class<?> c) { 
 		assert c.isInterface() : "Attempted to create an interface from a non-interface class!";
+		if(c.isSynthetic()) System.out.println("Warning: Using synthetic class " + c.getTypeName());
+		
 		if(interfaces.contains(c))
 			return interfaces.get(c);
 		JNIInterface jc = new JNIInterface(c);
@@ -87,6 +91,8 @@ public class EJNI {
 	 */
 	public static JNIEnum createJNIEnum(Class<?> c) { 
 		assert c.isEnum() : "Attempted to create an enum from a non-enum class!";
+		if(c.isSynthetic()) System.out.println("Warning: Using synthetic class " + c.getTypeName());
+		
 		if(enums.contains(c))
 			return enums.get(c);
 		JNIEnum jc = new JNIEnum(c);
