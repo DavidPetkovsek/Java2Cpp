@@ -7,7 +7,7 @@ import java.util.HashSet;
  */
 public abstract class JNINestable extends JNIType{
 	/** The types that this type declares */
-	protected final HashSet<JNIType> nestedTypes = new HashSet<>();
+	protected HashSet<JNIType> nestedTypes = new HashSet<>();
 	
 	/**
 	 * Casts this class to a JNIClass.
@@ -29,13 +29,20 @@ public abstract class JNINestable extends JNIType{
 	 * @param c Class to represent.
 	 */
 	protected JNINestable(Class<?> c) {
-		super(c);
+		super(c);	
+	}
+	
+	@Override
+	protected void init() {
+		super.init();
 		
 		for(var cc : c.getDeclaredClasses()) {
 			JNIType type = EJNI.createJNI(cc);
-			nestedTypes.add(type);
-			addHardDependency(type.hardDep);
-			addSoftDependency(type.softDep);
+			if(type != null) {
+				nestedTypes.add(type);
+				addHardDependency(type.hardDep);
+				addSoftDependency(type.softDep);
+			}
 		}
-	}
+	 }
 }

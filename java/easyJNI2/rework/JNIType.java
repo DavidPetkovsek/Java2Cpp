@@ -8,13 +8,13 @@ import java.util.HashSet;
  */
 public abstract class JNIType implements JNIBase{
 	/** The class this object represents */
-	protected final Class<?> c;
+	protected Class<?> c;
 	/** Parent class, if no parent then null */
-	protected final JNIClass parentClass;
+	protected JNIClass parentClass;
 	/** If this class is a nested class, the following is the declaring class, else null */
-	protected final JNINestable declaringClass;
+	protected JNINestable declaringClass;
 	/** Parent interfaces */
-	protected final HashSet<JNIInterface> parentInterfaces = new HashSet<>();
+	protected HashSet<JNIInterface> parentInterfaces = new HashSet<>();
 	/**
 	 * Dependencies that require a full C++ class definition is required.
 	 * 
@@ -25,7 +25,7 @@ public abstract class JNIType implements JNIBase{
 	 * 
 	 * 3. If any dependency is a nested. The containing class is promoted to a hard dependency.
 	 */
-	protected final HashSet<JNIType> hardDep = new HashSet<>();
+	protected HashSet<JNIType> hardDep = new HashSet<>();
 	/**
 	 * Dependencies that require only a C++ class declaration.
 	 * 
@@ -34,13 +34,13 @@ public abstract class JNIType implements JNIBase{
 	 * 
 	 * Soft dependencies can be promoted to hard dependencies. See JNIClass.hardDep.
 	 */
-	protected final HashSet<JNIType> softDep = new HashSet<>();
+	protected HashSet<JNIType> softDep = new HashSet<>();
 	/** All fields the type contains */
-	protected final HashSet<JNIField> fields = new HashSet<>();
+	protected HashSet<JNIField> fields = new HashSet<>();
 	/** All constructors the type contains */
-	protected final HashSet<JNIConstructor> constructors = new HashSet<>();
+	protected HashSet<JNIConstructor> constructors = new HashSet<>();
 	/** All methods the type contains */
-	protected final HashSet<JNIMethod> methods = new HashSet<>();
+	protected HashSet<JNIMethod> methods = new HashSet<>();
 	
 	/**
 	 * Construct a new JNIType to represent a java.lang.Class
@@ -48,7 +48,15 @@ public abstract class JNIType implements JNIBase{
 	 * @param c Class to represent.
 	 */
 	protected JNIType(Class<?> c) {
+		assert c != null;
 		this.c = c;
+	}
+	
+	/**
+	 * This function is the second part of the constructor. The constructor only partially initializes because
+	 * the static hash tables require a reference.
+	 */
+	protected void init() {
 		if(c.getDeclaringClass() != null)
 			declaringClass = EJNI.createJNINestable(c.getDeclaringClass());
 		else declaringClass = null;

@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class JNIEnum extends JNIType{
 
 	/** The enum constants declared by this enum */
-	protected final Enum<?>[] enumConstants;
+	protected Enum<?>[] enumConstants;
 	
 	/**
 	 * Construct a new JNIEnum to represent a java.lang.Class that represents an underlying enumerated (enum) type.

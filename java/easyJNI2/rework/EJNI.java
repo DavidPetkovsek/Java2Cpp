@@ -23,7 +23,7 @@ public class EJNI {
 	 */
 	public static JNIType createJNI(Class<?> c) {
 		if(c.isSynthetic()) System.out.println("Warning: Using synthetic class " + c.getTypeName());
-		if(c.isAnnotation() || c.isArray() || c.isPrimitive()) return null;
+		if(c.isAnnotation() || c.isArray() || c.isPrimitive()) { return null; }
 
 		if(c.isInterface()) return createJNIInterface(c);
 		else if(c.isEnum()) return createJNIEnum(c);
@@ -61,6 +61,7 @@ public class EJNI {
 			return classes.get(c);
 		JNIClass jc = new JNIClass(c);
 		classes.put(c, jc);
+		jc.init();
 		return jc;
 	 }
 
@@ -79,6 +80,7 @@ public class EJNI {
 			return interfaces.get(c);
 		JNIInterface jc = new JNIInterface(c);
 		interfaces.put(c, jc);
+		jc.init();
 		return jc;
 	 }
 	
@@ -97,6 +99,7 @@ public class EJNI {
 			return enums.get(c);
 		JNIEnum jc = new JNIEnum(c);
 		enums.put(c, jc);
+		jc.init();
 		return jc;
 	 }
 }
