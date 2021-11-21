@@ -6,9 +6,8 @@ import java.util.HashSet;
  * JNINestable is a JNIType that can hold nested Types such as nested classes, enums, or interfaces.
  */
 public abstract class JNINestable extends JNIType{
-	protected final HashSet<JNIClass> nestedClasses = new HashSet<>();
-	protected final HashSet<JNIEnum> nestedEnums = new HashSet<>();
-	protected final HashSet<JNIInterface> nestedInterfaces = new HashSet<>();
+	/** The types that this type declares */
+	protected final HashSet<JNIType> nestedTypes = new HashSet<>();
 	
 	/**
 	 * Casts this class to a JNIClass.
@@ -24,7 +23,19 @@ public abstract class JNINestable extends JNIType{
 	 */
 	public JNIInterface asInterface() { return null; }
 	
+	/**
+	 * Construct a new JNINestable to represent a java.lang.Class
+	 * 
+	 * @param c Class to represent.
+	 */
 	public JNINestable(Class<?> c) {
 		super(c);
+		
+		for(var cc : c.getDeclaredClasses()) {
+			JNIType type = EJNI.createJNI(cc);
+			nestedTypes.add(type);
+			addHardDependency(type.hardDep);
+			addSoftDependency(type.softDep);
+		}
 	}
 }

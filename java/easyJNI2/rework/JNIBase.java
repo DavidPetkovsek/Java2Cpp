@@ -34,4 +34,18 @@ public interface JNIBase {
 	public default boolean isPublic() { 
 		return Modifier.isPublic(getModifiers());
 	 }
+
+	/**
+	 * @return true if this is static, false otherwise
+	 */
+	public default boolean isStatic() { 
+		return Modifier.isStatic(getModifiers());
+	 }
+
+	/**
+	 * @return true if this is final, false otherwise
+	 */
+	public default boolean isFinal() { 
+		return Modifier.isFinal(getModifiers());
+	 }
 }

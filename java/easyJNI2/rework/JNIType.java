@@ -94,10 +94,11 @@ public abstract class JNIType implements JNIBase{
 	 * @param dep the JNIType to check
 	 * @return true if the JNIType is blacklisted, else false
 	 */
-	protected boolean isPrivacyBlackListed(JNIType dep) {
+	protected boolean isDependencyBlackListed(JNIType dep) {
 		// we do not include null
 		// we do not include or declare the declaring type of this nested type
-		return dep == null || dep.equals(declaringClass);
+		// do not be a dependency for yourself
+		return dep == null || dep.equals(declaringClass) || dep.equals(getTopLevelType()) || dep.equals(this);
 	}
 	
 	/**
@@ -131,7 +132,7 @@ public abstract class JNIType implements JNIBase{
 	 * @return true if the dependency didn't already exist as a hard dependency.
 	 */
 	protected boolean addHardDependency(JNIType dep) {
-		if(isPrivacyBlackListed(dep)) return false; // handles dep == null as well
+		if(isDependencyBlackListed(dep)) return false; // handles dep == null as well
 		if(dep.isNested()) return addHardDependency(dep.getTopLevelType());
 		boolean b = hardDep.add(dep);
 		softDep.remove(dep);
@@ -145,7 +146,7 @@ public abstract class JNIType implements JNIBase{
 	 * @return true if the dependency didn't already exist.
 	 */
 	protected boolean addSoftDependency(JNIType dep) {
-		if(isPrivacyBlackListed(dep)) return false; // handles dep == null as well
+		if(isDependencyBlackListed(dep)) return false; // handles dep == null as well
 		if(dep.isNested()) return addHardDependency(dep.getTopLevelType());
 		if(!hardDep.contains(dep))
 			return softDep.add(dep);
@@ -174,6 +175,8 @@ public abstract class JNIType implements JNIBase{
 	
 	@Override
 	public boolean equals(Object obj) { 
+		if(obj instanceof JNIType)
+			return c.equals(((JNIType) obj).c);
 		return c.equals(obj);
 	 }
 	
