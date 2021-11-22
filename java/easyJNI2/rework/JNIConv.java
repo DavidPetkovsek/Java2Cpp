@@ -20,7 +20,6 @@ public class JNIConv {
 		if(type.isArray()) {
 			while(type.isArray()) type = type.getComponentType();
 			if(type.isPrimitive()) return primitiveCppArrayMap.get(type);
-			System.out.println(type);
 			JNIType t = EJNI.createJNI(type);
 			assert t != null;
 			return "ejni::ObjectArray<"+t.getCppNamespacePath()+">";

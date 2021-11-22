@@ -8,11 +8,11 @@ import java.util.Hashtable;
 public class EJNI {
 
 	/** All created JNIClass objects */
-	private static Hashtable<Class<?>, JNIClass> classes = new Hashtable<>();
+	public static final Hashtable<Class<?>, JNIClass> classes = new Hashtable<>();
 	/** All created JNIInterface objects */
-	private static Hashtable<Class<?>, JNIInterface> interfaces = new Hashtable<>();
+	public static final Hashtable<Class<?>, JNIInterface> interfaces = new Hashtable<>();
 	/** All created JNIEnum objects */
-	private static Hashtable<Class<?>, JNIEnum> enums = new Hashtable<>();
+	public static final Hashtable<Class<?>, JNIEnum> enums = new Hashtable<>();
 
 	/**
 	 * Creates the appropriate JNIType of the given class if it does not exist. If it does exist return the existing

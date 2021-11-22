@@ -96,12 +96,12 @@ public class JNIInterface extends JNINestable {
 		}
 		sb.newLine();
 		
-		sb.append("protected: // methods").newLine();
+		sb.append("protected: //  nested types").newLine();
 		for(JNIType f : nestedTypes) {
 			if(f.isProtected())
 				f.buildCppHeader(sb).newLine();
 		}
-		sb.append("public: // methods").newLine();
+		sb.append("public: //  nested types").newLine();
 		for(JNIType f : nestedTypes) {
 			if(f.isPublic())
 				f.buildCppHeader(sb).newLine();
