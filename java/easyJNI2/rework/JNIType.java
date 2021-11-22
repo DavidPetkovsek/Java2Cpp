@@ -2,6 +2,7 @@ package easyJNI2.rework;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.regex.Pattern;
 
 /**
  * JNIType is meant to parallel a standard java.lang.Class. It is a high level type you would use in code.
@@ -189,7 +190,7 @@ public abstract class JNIType implements JNIBase{
 	 }
 	
 	@Override
-	public int hashCode() { 
+	public int hashCode() {
 		return c.hashCode();
 	 }
 	
@@ -197,5 +198,31 @@ public abstract class JNIType implements JNIBase{
 	public int getModifiers() { 
 		return c.getModifiers();
 	 }
+
+	@Override
+	public String toString() { 
+		return c.toString();
+	 }
+	
+	public String getCppNamespacePath() { 
+		String path = c.getSimpleName();
+		Class<?> c = this.c;
+		while(true) {
+			if(c.getDeclaringClass() != null) {
+				c = c.getDeclaringClass();
+				path = c.getSimpleName()+"::"+path;
+			}else break;
+		}
+		path = "ejni::" + c.getPackage().getName().replaceAll(Pattern.quote("."), "::") + "::"+path;
+		return path;
+	 }
+	
+	public String getCppIncludePath() {
+		return "ejni/" + getTopLevelType().c.getTypeName().replaceAll(Pattern.quote("."), "/")+".hpp";
+	}
+	
+	public String getCppSrcPath() {
+		return "ejni/" + getTopLevelType().c.getTypeName().replaceAll(Pattern.quote("."), "/")+".cpp";
+	}
 
 }

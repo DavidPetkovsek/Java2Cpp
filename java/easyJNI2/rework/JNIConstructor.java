@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
+import easyJNI2.lib.StringBuilder2;
+
 /**
  * The JNIConstructor is meant to parallel a standard java.lang.reflect.Constructor.
  */
@@ -32,6 +34,18 @@ public class JNIConstructor extends JNIMember{
 	@Override
 	public int getModifiers() { 
 		return con.getModifiers();
+	 }
+
+
+	@Override
+	public StringBuilder2 buildCppHeader(StringBuilder2 sb) {
+		sb.append(con.getDeclaringClass().getSimpleName(),"(");
+		if(!parameters.isEmpty())
+			parameters.get(0).buildCppHeader(sb);
+		for(int i = 1; i < parameters.size(); ++i)
+			sb.append(", ").use(parameters.get(i).buildCppHeader(sb));
+		sb.append(");");
+		return sb;
 	 }
 
 }

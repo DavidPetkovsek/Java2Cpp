@@ -22,6 +22,7 @@ public class EJNI {
 	 * @return A JNIType or null if (invalid or input is null)
 	 */
 	public static JNIType createJNI(Class<?> c) {
+		assert c != null;
 		if(c.isSynthetic()) System.out.println("Warning: Using synthetic class " + c.getTypeName());
 		if(c.isAnnotation() || c.isArray() || c.isPrimitive()) { return null; }
 

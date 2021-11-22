@@ -2,6 +2,8 @@ package easyJNI2.rework;
 
 import java.lang.reflect.Parameter;
 
+import easyJNI2.lib.StringBuilder2;
+
 /**
  * The JNIParameter is meant to parallel a standard java.lang.reflect.Parameter.
  */
@@ -17,12 +19,27 @@ public class JNIParameter extends JNIMember{
 	 */
 	public JNIParameter(Parameter p) {
 		this.p = p;
-		addDependency(EJNI.createJNI(p.getType()));
+		Class<?> type = p.getType();
+		while(type.isArray()) type = type.getComponentType();
+		addDependency(EJNI.createJNI(type));
 	 }
 
 	@Override
 	public int getModifiers() { 
 		return p.getModifiers();
+	 }
+	
+	@Override
+	public String toString() { 
+		return p.getType() + " " + p.getName();
+	 }
+
+	@Override
+	public StringBuilder2 buildCppHeader(StringBuilder2 sb) {
+		if(isFinal())
+			sb.append("const ");
+		sb.append(JNIConv.getCppParameterType(p.getType()), " ", p.getName());
+		return sb;
 	 }
 
 }

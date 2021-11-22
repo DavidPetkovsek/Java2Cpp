@@ -2,6 +2,8 @@ package easyJNI2.rework;
 
 import java.lang.reflect.Modifier;
 
+import easyJNI2.lib.StringBuilder2;
+
 /**
  * Contains a number of basic functions common among both JNIMembers and JNITypes
  */
@@ -48,4 +50,19 @@ public interface JNIBase {
 	public default boolean isFinal() { 
 		return Modifier.isFinal(getModifiers());
 	 }
+
+	/**
+	 * @return true if this is final, false otherwise
+	 */
+	public default boolean isAbstract() { 
+		return Modifier.isAbstract(getModifiers());
+	 }
+	
+	/**
+	 * Create a string with the c++ implementation of this JNI object.
+	 * 
+	 * @param sb The string builder to use
+	 * @return The string builder passed in (sb)
+	 */
+	public StringBuilder2 buildCppHeader(final StringBuilder2 sb);
 }

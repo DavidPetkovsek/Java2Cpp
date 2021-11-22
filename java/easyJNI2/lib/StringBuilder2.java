@@ -4,14 +4,50 @@ import java.util.List;
 
 public class StringBuilder2 implements CharSequence{
 
+	private int tabs = 0;
 	private StringBuilder sb;
 
 	public StringBuilder2() { sb = new StringBuilder(); }
 	public StringBuilder2(CharSequence cs) { sb = new StringBuilder(cs); }
 	public StringBuilder2(String s) { sb = new StringBuilder(s); }
 	public StringBuilder2(StringBuilder sb) { this.sb = new StringBuilder(sb); }
-	public StringBuilder2(StringBuilder2 sb) { this.sb = new StringBuilder(sb.sb); }
+	public StringBuilder2(StringBuilder2 sb) { this.sb = new StringBuilder(sb.sb); tabs = sb.tabs; }
 
+	public StringBuilder2 setTabs(int tabs) {
+		this.tabs = tabs;
+		return this;
+	}
+	
+	public int addTab() {
+		return ++tabs;
+	}
+	
+	public int removeTab() {
+		if(tabs <= 0) {
+			tabs = 0;
+			return tabs;
+		}
+		return --tabs;
+	}
+	
+	public StringBuilder2 appendTabs() {
+		sb.append("\t".repeat(tabs));
+		return this;
+	}
+	
+	public int getTabs() { return tabs; }
+
+	public StringBuilder2 newLine() {
+		append("\n").appendTabs();
+		return this;
+	}
+	
+	public StringBuilder2 newLine(int change) {
+		tabs += change;
+		append("\n").appendTabs();
+		return this;
+	}
+	
 	public StringBuilder2 append(boolean b) {
 		sb.append(b);
 		return this;
